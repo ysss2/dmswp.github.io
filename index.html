@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>선택</title>
+    <style>
+        #fullScreenText {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* 어두운 배경 */
+    color: white; /* 텍스트 색상을 흰색으로 변경 */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 5em; /* 텍스트 크기 조정 */
+    padding: 20px;
+}
+
+#f {
+    position: fixed;
+    top: 50%; /* 화면 중앙에 수직 정렬 */
+    left: 100%; /* 화면 오른쪽 밖에서 시작 */
+    width: auto; /* 텍스트 크기에 맞게 설정 */
+    font-size: 2em; /* 글자 크기 설정 */
+    color: white; /* 글자 색상 */
+    background-color: transparent; /* 배경색을 투명하게 설정 */
+    display: none; /* 처음에는 보이지 않도록 */
+    padding: 10px;
+    white-space: nowrap; /* 텍스트가 한 줄로 보이도록 */
+    overflow: hidden;
+    text-align: center;
+    transform: translateY(-50%); /* 세로 중앙 정렬 */
+    animation: none; /* 초기 애니메이션 없음 */
+}
+
+@keyframes scrollText {
+    0% {
+        left: 100%; /* 화면 오른쪽 밖에서 시작 */
+    }
+    100% {
+        left: -100%; /* 화면 왼쪽 밖으로 완전히 지나갈 때 */
+    }
+}
+
+#s {
+    position: fixed;
+    bottom: 0; /* 화면 하단에서 시작 */
+    left: 50%; /* 화면 중앙 가로 정렬 */
+    width: 100%;
+    font-size: 2em; /* 글자 크기 설정 */
+    color: white; /* 글자 색상 */
+    background-color: transparent; /* 배경색을 투명하게 설정 */
+    display: none; /* 처음에는 보이지 않도록 */
+    padding: 10px;
+    white-space: nowrap; /* 텍스트가 한 줄로 보이도록 */
+    overflow: hidden;
+    text-align: center;
+    transform: translateX(-50%); /* 세로 중앙 정렬 */
+    animation: none; /* 초기 애니메이션 없음 */
+}
+
+@keyframes slideUp {
+    0% {
+        bottom: -100%; /* 화면 밖 하단에서 시작 */
+    }
+    100% {
+        bottom: 100%; /* 화면 위로 이동 */
+    }
+}
+
+#i {
+    position: fixed;
+    bottom: 0; /* 화면 하단에서 시작 */
+    left: 50%; /* 화면 중앙 가로 정렬 */
+    width: 100%;
+    font-size: 2em; /* 글자 크기 설정 */
+    color: white; /* 글자 색상 */
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)); /* 화면 아래가 가장 어두운 그라데이션 배경 */
+    display: none; /* 처음에는 보이지 않도록 */
+    padding: 10px;
+    white-space: nowrap; /* 텍스트가 한 줄로 보이도록 */
+    overflow: hidden;
+    text-align: center;
+    transform: translateX(-50%); /* 세로 중앙 정렬 */
+    opacity: 0; /* 처음에는 투명하게 설정 */
+    animation: fadeIn 5s forwards; /* 서서히 나타나는 애니메이션 */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 0.7), 0 0 30px rgba(255, 255, 255, 0.5); /* 빛나는 효과 */
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0; /* 처음에는 투명 */
+    }
+    100% {
+        opacity: 1; /* 서서히 불투명해져서 보임 */
+    }
+}
+
+#blueScreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: blue; /* 블루스크린 기본 배경 */
+    color: white; /* 텍스트가 필요하면 하얀색 */
+    display: none; /* 기본적으로 숨김 */
+    justify-content: center;
+    align-items: center;
+    font-size: 1em;
+    z-index: 1000; /* 다른 요소 위에 표시 */
+    flex-direction: column; /* 문장을 세로로 정렬 */
+    padding: 20px; /* 블루스크린 내부 여백 */
+    text-align: center; /* 문장 중앙 정렬 */
+}
+
+#blueScreen p {
+    margin: 20px 0; /* 각 문단 사이에 여백 추가 */
+}
+
+
+
+
+img {
+    width: 100px;
+    transition: transform 0.3s ease, box-shadow 0.5s ease;
+}
+
+img:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+body {
+    background-color: #dfdfdf;
+    transition: background-color 0.5s ease;
+    font-family: Arial, sans-serif;
+}
+
+    </style>
+</head>
+<body>
+    <img id="image1" src="https://i.imgur.com/owT5KoM.jpeg" alt="Image 1" />
+    <img id="image2" src="https://i.imgur.com/OYjY3Ch.jpeg" alt="Image 2" />
+    <img id="image3" src="https://i.imgur.com/BI09RoB.jpeg" alt="Image 3" />
+    <img id="image4" src="https://i.imgur.com/Pnk0kdL.jpeg" alt="Image 4" />
+    <img id="image5" src="https://i.imgur.com/L7XkOCm.jpeg" alt="Image 5" />
+    <img id="image6" src="https://i.imgur.com/SwoT859.jpeg" alt="Image 6" />
+    <img id="image7" src="https://i.imgur.com/5Dfp7TW.jpeg" alt="Image 7" />
+    <img id="image8" src="https://i.imgur.com/m0E1L6p.jpeg" alt="Image 8" />
+    <img id="image9" src="https://i.imgur.com/RDORrWb.jpeg" alt="Image 9" />
+    <img id="image10" src="https://i.imgur.com/muplcqL.jpeg" alt="Image 10" />
+    <img id="image11" src="https://i.imgur.com/IeObZR1.jpeg" alt="Image 11" />
+    <img id="image12" src="https://i.imgur.com/pqrZ7S9.jpeg" alt="Image 12" />
+    <img id="image13" src="https://i.imgur.com/rW52K9t.jpeg" alt="Image 13" />
+    <img id="image14" src="https://i.imgur.com/yPRFMoS.jpeg" alt="Image 14" />
+    <img id="image15" src="https://i.imgur.com/YaRQYWY.jpeg" alt="Image 15" />
+    <img id="image16" src="https://i.imgur.com/uNeIauQ.jpeg" alt="Image 16" />
+    <img id="image17" src="https://i.imgur.com/UJgz79H.jpeg" alt="Image 17" />
+    <img id="image18" src="https://i.imgur.com/mzqkYoC.jpeg" alt="Image 18" />
+    <img id="image19" src="https://i.imgur.com/W04iOqA.jpeg" alt="Image 19" />
+    <img id="image20" src="https://i.imgur.com/JmJeHKz.jpeg" alt="Image 20" />
+    <img id="image21" src="https://i.imgur.com/w9a7fms.jpeg" alt="Image 21" />
+    <img id="image22" src="https://i.imgur.com/2oSrBEs.jpeg" alt="Image 22" />
+    <img id="image23" src="https://i.imgur.com/TBgoDyx.jpeg" alt="Image 23" />
+    <img id="image24" src="https://i.imgur.com/W5aMVTW.jpeg" alt="Image 24" />
+    <img id="image25" src="https://i.imgur.com/OAe4y1a.jpeg" alt="Image 25" />
+    <img id="image26" src="https://i.imgur.com/XwLmHjk.jpeg" alt="Image 26" />
+    <img id="image27" src="https://i.imgur.com/78a0wn7.jpeg" alt="Image 27" />
+    <img id="image28" src="https://i.imgur.com/dgmw7QS.jpeg" alt="Image 28" />
+    <img id="image29" src="https://i.imgur.com/5dEbHZs.jpeg" alt="Image 29" />
+    <img id="image30" src="https://i.imgur.com/ak7FGbo.jpeg" alt="Image 30" />
+    <img id="image31" src="https://i.imgur.com/KKemPU2.jpeg" alt="Image 31" />
+    <img id="image32" src="https://i.imgur.com/UpnDgru.jpeg" alt="Image 32" />
+    <img id="image33" src="https://i.imgur.com/bu1hEgr.jpeg" alt="Image 33" />
+    <img id="image34" src="https://i.imgur.com/Ypdtucp.jpeg" alt="Image 34" />
+    <img id="image35" src="https://i.imgur.com/Ypdtucp.jpeg" alt="Image 35" />
+    <img id="image36" src="https://i.imgur.com/NDv8SM6.jpeg" alt="Image 36" />
+    <img id="image37" src="https://i.imgur.com/OMG9lSa.jpeg" alt="Image 37" />
+    <img id="image38" src="https://i.imgur.com/3SmwXD7.jpeg" alt="Image 38" />
+    <img id="image39" src="https://i.imgur.com/py3gw7U.jpeg" alt="Image 39" />
+    <img id="image40" src="https://i.imgur.com/Ghn2szw.jpeg" alt="Image 40" />
+    <img id="image41" src="https://i.imgur.com/He5iAV1.jpeg" alt="Image 41" />
+    <img id="image42" src="https://i.imgur.com/eBUyfIH.jpeg" alt="Image 42" />
+    <img id="image43" src="https://i.imgur.com/OIr9ubY.jpeg" alt="Image 43" />
+    <img id="image44" src="https://i.imgur.com/0zwsWQ4.jpeg" alt="Image 44" />
+    <img id="image45" src="https://i.imgur.com/3mqteX5.jpeg" alt="Image 45" />
+    <img id="image46" src="https://i.imgur.com/oaqEkM5.jpeg" alt="Image 46" />
+    <img id="image47" src="https://i.imgur.com/CGNb0nc.jpeg" alt="Image 47" />
+    <img id="image48" src="https://i.imgur.com/7AuaB8V.jpeg" alt="Image 48" />
+    <img id="image49" src="https://i.imgur.com/2kPv1Q1.jpeg" alt="Image 49" />
+    <img id="image50" src="https://i.imgur.com/R9P6Evz.jpeg" alt="Image 50" />
+    <img id="image51" src="https://i.imgur.com/IzRgDIZ.jpeg" alt="Image 51" />
+    <img id="image52" src="https://i.imgur.com/n1XxRLX.jpeg" alt="Image 52" />
+    <img id="image53" src="https://i.imgur.com/LHAOWMA.jpeg" alt="Image 53" />
+    <img id="image54" src="https://i.imgur.com/7izIC2d.jpeg" alt="Image 54" />
+    <img id="image55" src="https://i.imgur.com/i2j5nKQ.jpeg" alt="Image 55" />
+    <img id="image56" src="https://i.imgur.com/rCQVwDn.jpeg" alt="Image 56" />
+    <img id="image57" src="https://i.imgur.com/amRoqrg.jpeg" alt="Image 57" />
+    <img id="image58" src="https://i.imgur.com/RZLNSmL.jpeg" alt="Image 58" />
+    <img id="image59" src="https://i.imgur.com/Kgc2lIJ.jpeg" alt="Image 59" />
+    <img id="image60" src="https://i.imgur.com/t6ECHfp.jpeg" alt="Image 60" />
+    <img id="image61" src="https://i.imgur.com/oSx29bm.jpeg" alt="Image 61" />
+    <img id="image62" src="https://i.imgur.com/NQcoUKq.jpeg" alt="Image 62" />
+    <img id="image63" src="https://i.imgur.com/vJu7sed.jpeg" alt="Image 63" />
+    <img id="image64" src="https://i.imgur.com/EtMFiSX.jpeg" alt="Image 64" />
+    <img id="image65" src="https://i.imgur.com/iIBLT9C.jpeg" alt="Image 65" />
+    <img id="image66" src="https://i.imgur.com/0jKaluS.jpeg" alt="Image 66" />
+    <img id="image67" src="https://i.imgur.com/cvmtMdJ.jpeg" alt="Image 67" />
+    <img id="image68" src="https://i.imgur.com/Bqa0VLn.jpeg" alt="Image 68" />
+    <img id="image69" src="https://i.imgur.com/3ZaVSGg.jpeg" alt="Image 69" />
+    <img id="image70" src="https://i.imgur.com/jH5fmC9.jpeg" alt="Image 70" />
+    <img id="image71" src="https://i.imgur.com/UlYkrPf.jpeg" alt="Image 71" />
+    <img id="image72" src="https://i.imgur.com/roEgwJg.jpeg" alt="Image 72" />
+    <img id="image73" src="https://i.imgur.com/PRGbcnR.jpeg" alt="Image 73" />
+    <img id="image74" src="https://i.imgur.com/qVfFZIU.jpeg" alt="Image 74" />
+    <img id="image75" src="https://i.imgur.com/eNOcoEE.jpeg" alt="Image 75" />
+    <img id="image76" src="https://i.imgur.com/pVP27te.jpeg" alt="Image 76" />
+    <img id="image77" src="https://i.imgur.com/CiABaNz.jpeg" alt="Image 77" />
+    <img id="image78" src="https://i.imgur.com/PyQSRNg.jpeg" alt="Image 78" />
+    <img id="image79" src="https://i.imgur.com/5vFAKQV.jpeg" alt="Image 79" />
+    <img id="image80" src="https://i.imgur.com/uR5QGGd.jpeg" alt="Image 80" />
+    <img id="image81" src="https://i.imgur.com/uTL47qa.jpeg" alt="Image 81" />
+    <img id="image82" src="https://i.imgur.com/seTs6Ke.jpeg" alt="Image 82" />
+    <img id="image83" src="https://i.imgur.com/ubB96zW.jpeg" alt="Image 83" />
+    <img id="image84" src="https://i.imgur.com/4VnIWaF.jpeg" alt="Image 84" />
+    <img id="image85" src="https://i.imgur.com/tLMr6Ds.jpeg" alt="Image 85" />
+    <img id="image86" src="https://i.imgur.com/e1U941v.jpeg" alt="Image 86" />
+    <img id="image87" src="https://i.imgur.com/hFBpr6v.jpeg" alt="Image 87" />
+    <img id="image88" src="https://i.imgur.com/cbOpMCB.jpeg" alt="Image 88" />
+    <img id="image89" src="https://i.imgur.com/4NW7Bp1.jpeg" alt="Image 89" />
+    <img id="image90" src="https://i.imgur.com/TdB3GA8.jpeg" alt="Image 90" />
+    <img id="image91" src="https://i.imgur.com/vChr0Yr.jpeg" alt="Image 91" />
+    <img id="image92" src="https://i.imgur.com/9WAFgyJ.jpeg" alt="Image 92" />
+    <img id="image93" src="https://i.imgur.com/6szLJIl.jpeg" alt="Image 93" />
+    <img id="image94" src="https://i.imgur.com/M4vIxBE.jpeg" alt="Image 94" />
+    <img id="image95" src="https://i.imgur.com/YaMCIYG.jpeg" alt="Image 95" />
+    <img id="image96" src="https://i.imgur.com/ghxAS46.jpeg" alt="Image 96" />
+    <img id="image97" src="https://i.imgur.com/uhYWZL8.jpeg" alt="Image 97" />
+    <img id="image98" src="https://i.imgur.com/6PFQRbU.jpeg" alt="Image 98" />
+    <img id="image99" src="https://i.imgur.com/EBbmZn1.jpeg" alt="Image 99" />
+    <img id="image100" src="https://i.imgur.com/6bmzcVk.jpeg" alt="Image 100" />
+    <img id="image101" src="https://i.imgur.com/U6I5N2i.jpeg" alt="Image 101" />
+    <img id="image102" src="https://i.imgur.com/zk4DdCL.jpeg" alt="Image 102" />
+    <img id="image103" src="https://i.imgur.com/msOjkw2.jpeg" alt="Image 103" />
+    <img id="image104" src="https://i.imgur.com/qOiwnpJ.jpeg" alt="Image 104" />
+    <img id="image105" src="https://i.imgur.com/TDoQVb5.jpeg" alt="Image 105" />
+    <img id="image106" src="https://i.imgur.com/8sm5aIU.jpeg" alt="Image 106" />
+    <img id="image107" src="https://i.imgur.com/o5Hc7zH.jpeg" alt="Image 107" />
+    <img id="image108" src="https://i.imgur.com/Vzo8HsO.jpeg" alt="Image 108" />
+    <img id="image109" src="https://i.imgur.com/1a4uw2a.jpeg" alt="Image 109" />
+    <img id="image110" src="https://i.imgur.com/cdi4Ke0.jpeg" alt="Image 110" />
+    <img id="image111" src="https://i.imgur.com/KnSDXyG.jpeg" alt="Image 111" />
+    <img id="image112" src="https://i.imgur.com/9JGy01v.jpeg" alt="Image 112" />
+    <img id="image113" src="https://i.imgur.com/AxM1dOC.jpeg" alt="Image 113" />
+    <img id="image114" src="https://i.imgur.com/IWiGOmH.jpeg" alt="Image 114" />
+    <img id="image115" src="https://i.imgur.com/2UQLkYP.jpeg" alt="Image 115" />
+    <img id="image116" src="https://i.imgur.com/k0v03vT.jpeg" alt="Image 116" />
+
+
+    <div id="fullScreenText">
+        <p>너도 나 무시해? 왜 이렇게 하루 종일 짜증나게 굴어?</p>
+    </div>
+
+    <div id="f">
+        <p>있잖아,, 사람은 죽어서 어디로 가는 걸까..</p>
+    </div>
+    
+    <div id="s">
+        <p>하늘에 계신 우리 아버지여,</p>
+        <p>이름이 거룩히 여김을 받으시오며,</p>
+    </div>
+
+    <div id="i">
+        <p>그래도 너가 있어서 다행이다..너 없으면 이런 말 누구랑 하니..고마워</p>
+    </div>
+
+    <div id="blueScreen">
+        <p>아됐어. 그만해 그냥.</p>
+        <p>[000님이 채팅방을 나갔습니다.]</p>
+    </div>
+
+    <script>
+        // 8번 이미지 클릭 이벤트
+document.getElementById('image40').addEventListener('click', function() {
+    // 텍스트를 화면에 표시
+    document.getElementById('fullScreenText').style.display = 'flex';
+});
+
+// 화면을 클릭하면 텍스트 숨기기
+document.getElementById('fullScreenText').addEventListener('click', function() {
+    // 텍스트를 숨김
+    this.style.display = 'none';
+});
+/////////////////////////////////////////////////////////////////////////////////
+
+document.getElementById('image71').addEventListener('click', function() {
+    // 텍스트를 화면에 표시
+    const textElement = document.getElementById('f');
+    textElement.style.display = 'block'; // 텍스트 표시
+    
+    // 텍스트를 여러 번 반복하여 길게 만듦
+    const text = textElement.querySelector('p').innerHTML;
+    textElement.querySelector('p').innerHTML = text + text + text + text + text; // 텍스트 길이를 늘림
+
+    textElement.style.animation = 'scrollText 30s linear forwards'; // 애니메이션 한 번만 실행
+});
+
+document.getElementById('f').addEventListener('click', function() {
+    // 텍스트를 숨김
+    this.style.display = 'none'; // 텍스트 숨기기
+    this.style.animation = 'none'; // 애니메이션 중지
+});
+
+    /////////////////////////////////////////////////////////////////////////////////
+
+document.getElementById('image98').addEventListener('click', function() {
+    // 텍스트를 화면에 표시
+    const textElement = document.getElementById('s');
+    textElement.style.display = 'block'; // 텍스트 표시
+    textElement.style.animation = 'slideUp 10s linear infinite'; // 애니메이션 시작
+});
+
+document.getElementById('s').addEventListener('click', function() {
+    // 텍스트를 숨김
+    this.style.display = 'none'; // 텍스트 숨기기
+    this.style.animation = 'none'; // 애니메이션 중지
+});
+
+/////////////////////////////////////////////////////////////////////////////////
+
+document.getElementById('image30').addEventListener('click', function() {
+    // 텍스트를 화면에 표시
+    const textElement = document.getElementById('i');
+    textElement.style.display = 'block'; // 텍스트 표시
+    // 텍스트가 나타나는 애니메이션 시작
+    textElement.style.animation = 'fadeIn 5s forwards'; // 애니메이션 시작
+});
+
+document.getElementById('i').addEventListener('click', function() {
+    // 텍스트를 숨김
+    this.style.display = 'none'; // 텍스트 숨기기
+    this.style.animation = 'none'; // 애니메이션 중지
+});
+
+/////////////////////////////////////////////////////////////////////////////////
+document.getElementById('image11').addEventListener('click', function() {
+    // 블루스크린 이미지 표시
+    const blueScreen = document.getElementById('blueScreen');
+    blueScreen.style.display = 'flex'; // 블루스크린 표시
+});
+
+document.getElementById('blueScreen').addEventListener('click', function() {
+    // 블루스크린 숨기기
+    this.style.display = 'none';
+});
+    </script>
+</body>
+</html>
